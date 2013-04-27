@@ -11,7 +11,8 @@ conn.once('open', function callback(){
     email: String,
     googleId: String,
     refreshToken: String,
-    number: String
+    number: String,
+    filters: String
   }));
 
 });

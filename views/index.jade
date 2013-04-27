@@ -25,9 +25,21 @@ block content
 
       h2 Filters
       ul.filters
-        li
-          strong.label From
-          span blah@gmail.com
+        - if (filters.length > 0)
+          each filter in filters
+            li
+              strong.label= filter.type
+              span= filter.value
+        - else
+          li.empty No filter setup yet
+      p
+        select.filter-type
+          option(value='from') From email address
+          option(value='has') Subject has words
+
+        input(type='text').filter-value
+
+        button(type='button').add-filter Add filter
 
       p
         button(type='submit') Save changes
@@ -35,3 +47,56 @@ block content
   - else
     p
       a(href='/auth/google') Login
+
+  script
+
+    var $filters = $('.filters'),
+        $filterType = $('.filter-type'),
+        $filterValue = $('.filter-value');
+
+    $('.add-filter').on('click', function(e) {
+      e.preventDefault();
+      $filters
+        .append(
+          $('<li>')
+            .append(
+              $('<strong>')
+                .addClass('label')
+                .text($filterType.val())
+            )
+            .append(
+              $('<span>')
+                .text($filterValue.val())
+            )
+        )
+        .find('.empty').remove();
+      $filterValue.val('');
+    });
+
+    var $form = $('form');
+    $form.on('submit', function(e) {
+      e.preventDefault();
+
+      var data = $form.serializeArray(),
+          filters = [];
+
+      $filters.find('li').each(function() {
+        var $li = $(this);
+        filters.push({
+          type: $li.find('strong').text(),
+          value: $li.find('span').text()
+        });
+      });
+      data.push({
+        name: 'filters',
+        value: JSON.stringify(filters)
+      });
+
+      $.ajax({
+        url: '',
+        type: 'post',
+        data: $.param(data)
+      }).done(function(response) {
+        location.reload();
+      });
+    });
