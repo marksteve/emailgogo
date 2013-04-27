@@ -31,19 +31,30 @@ exports.listen = function(userId) {
               body: true,
               cb: function(fetch) {
                 fetch.on('message', function(msg) {
-                  var body = '', head = '';
+                  var body = '', head = {};
                   // Get headers
                   msg.on('headers', function(headers) {
-                    head += 'Subject: ' + headers.subject[0].trim() + '\n';
-                    head += 'From: ' + headers.from[0].trim() + '\n';
+                    head.subject = 'Subject: ' + headers.subject[0].trim() + '\n';
+                    head.from = 'From: ' + headers.from[0].trim() + '\n';
                   });
                   // Get body
                   msg.on('data', function(chunk) {
                     body += chunk.toString('utf8');
                   });
-                  // Send SMS using Firefly
                   msg.on('end', function() {
-                    var message = (head + getPlainText(body)).trim();
+                    var send = false;
+                    // Check filters
+                    JSON.parse(user.filters).forEach(function(filter) {
+                      if (send) return;
+                      if (filter.type == 'from') {
+                        if (head.from.indexOf(filter.value) >= 0) {
+                          send = true;
+                        }
+                      }
+                    });
+                    if (!send) return;
+                    // Send SMS using Firefly
+                    var message = (head.subject + head.from + getPlainText(body)).trim();
                     request
                       .get('https://fireflyapi.com/api/sms')
                       .query({
