@@ -31,12 +31,9 @@ exports.loadUser = function(req, res, next){
   });
 };
 
-exports.makeActive = function(req, res){
-  req.currUser.update({active: true}, function(err){
-    if (err) throw err;
-    req.sock.send(String(req.currUser.id));
-    res.redirect('/admin');
-  });
+exports.process = function(req, res){
+  req.sock.send(String(req.currUser.id));
+  res.redirect('/admin');
 };
 
 exports.removeUser = function(req, res){

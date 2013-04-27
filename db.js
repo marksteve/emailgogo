@@ -10,8 +10,7 @@ conn.once('open', function callback(){
     name: String,
     email: String,
     googleId: String,
-    refreshToken: String,
-    active: {'type': Boolean, 'default': false}
+    refreshToken: String
   }));
 
 });

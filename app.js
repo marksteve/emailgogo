@@ -86,7 +86,7 @@ app.all('*', useSock);
 
 app.get('/admin', admin.index);
 app.all('/admin/users/:uid/*', admin.loadUser);
-app.get('/admin/users/:uid/make-active', admin.makeActive);
+app.get('/admin/users/:uid/process', admin.process);
 app.get('/admin/users/:uid/remove', admin.removeUser);
 
 app.get('/auth/google', auth.google);

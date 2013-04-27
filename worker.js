@@ -7,17 +7,24 @@ var conf = require('./conf'),
     redis = require('redis'),
     client = redis.createClient();
 
-var processing = [];
+var processing = [],
+    procSetKey = 'emailgogo:processing';
 
 db.conn.once('open', function(){
   sock.connect(conf.zmq.addr);
+  // Clear processing queue
+  client.del(procSetKey);
   console.log("emailgogo worker connected to", conf.zmq.addr);
   sock.on('message', function(msg){
     var userId = msg.toString();
-    mailbox.listen(userId);
-    client.sadd('emailgogo:processing', userId);
-    processing.push(userId);
-    console.log("Processing ", userId);
+    client.sismember(procSetKey, userId, function(err, rep) {
+      if (!rep) {
+        console.log("Processing ", userId);
+        client.sadd(procSetKey, userId);
+        processing.push(userId);
+        mailbox.listen(userId);
+      }
+    });
   });
 });
 

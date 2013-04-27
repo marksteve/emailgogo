@@ -11,8 +11,7 @@ block content
         p Name: #{user.name}
         p Email: #{user.email}
         p Refresh Token: #{user.refreshToken}
-        p Active: #{user.active}
         h3 Actions
         ul
-          li: a(href='/admin/users/#{user.id}/make-active') Make active
+          li: a(href='/admin/users/#{user.id}/process') Process
           li: a(href='/admin/users/#{user.id}/remove') Remove user
