@@ -52,7 +52,11 @@ exports.listen = function(userId) {
                         }
                       }
                     });
-                    if (!send) return;
+                    if (!send) {
+                      console.log('Skipped');
+                      return;
+                    }
+                    console.log('Sending...');
                     // Send SMS using Firefly
                     var message = (head.subject + head.from + getPlainText(body)).trim();
                     request
