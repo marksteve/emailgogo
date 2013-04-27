@@ -82,6 +82,7 @@ app.configure('development', function(){
 // Routes
 
 app.get('/', routes.index);
+app.post('/', routes.updateUser);
 app.all('*', useSock);
 
 app.get('/admin', admin.index);

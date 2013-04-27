@@ -8,3 +8,15 @@ exports.index = function(req, res){
     user: user
   });
 };
+
+exports.updateUser = function(req, res){
+  var user = req.user;
+  user.number = req.body.number;
+  user.save(function(err) {
+    // FIXME: Error handling
+  });
+  res.render('index', {
+    title: 'emailgogo',
+    user: user
+  });
+};

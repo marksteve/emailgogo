@@ -4,26 +4,33 @@ block js
   script(src='/javascripts/user.js')
 
 block content
+
   h1= title
+
   - if (user)
-    p Hi #{user.name}!
-    p
-      a(href='/auth/logout') Logout
 
-    h2 Profile
-    p
-      strong.label Email
-      span #{user.email}
-    p
-      strong.label Number
-      input(type='text', name='number', val=user.number)
+    form(method='post', action='')
 
-    h2 Filters
-    ul.filters
-      li
-        strong.label From
-        span blah@gmail.com
+      p Hi #{user.name}!
+      p
+        a(href='/auth/logout') Logout
 
+      h2 Profile
+      p
+        strong.label Email
+        span #{user.email}
+      p
+        strong.label Number
+        input(type='text', name='number', value=user.number)
+
+      h2 Filters
+      ul.filters
+        li
+          strong.label From
+          span blah@gmail.com
+
+      p
+        button(type='submit') Save changes
 
   - else
     p
