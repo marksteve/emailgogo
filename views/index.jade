@@ -6,13 +6,24 @@ block js
 block content
   h1= title
   - if (user)
+    p Hi #{user.name}!
     p
       a(href='/auth/logout') Logout
-    p ID: #{user.id}
-    p Google ID: #{user.googleId}
-    p Name: #{user.name}
-    p Email: #{user.email}
-    p Refresh Token: #{user.refreshToken}
+
+    h2 Profile
+    p
+      strong.label Email
+      span #{user.email}
+    p
+      strong.label Number
+      input(type='text', name='number', val=user.number)
+
+    h2 Filters
+    ul.filters
+      li
+        strong.label From
+        span blah@gmail.com
+
 
   - else
     p
