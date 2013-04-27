@@ -1,0 +1,20 @@
+extends layout
+
+block js
+  script(src='/javascripts/user.js')
+
+block content
+  h1= title
+  - if (user)
+    p
+      a(href='/auth/logout') Logout
+    p ID: #{user.id}
+    p Google ID: #{user.googleId}
+    p Name: #{user.name}
+    p Email: #{user.email}
+    p Refresh Token: #{user.refreshToken}
+    p Active: #{user.active}
+
+  - else
+    p
+      a(href='/auth/google') Login

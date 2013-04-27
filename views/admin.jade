@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  h1= title
+  h2 Users
+  ul
+    each user in users
+      li
+        p ID: #{user.id}
+        p Google ID: #{user.googleId}
+        p Name: #{user.name}
+        p Email: #{user.email}
+        p Refresh Token: #{user.refreshToken}
+        p Active: #{user.active}
+        h3 Actions
+        ul
+          li: a(href='/admin/users/#{user.id}/make-active') Make active
+          li: a(href='/admin/users/#{user.id}/remove') Remove user
