@@ -48,7 +48,7 @@ exports.listen = function(userId) {
                       .get('https://fireflyapi.com/api/sms')
                       .query({
                         api: conf.firefly.apiKey,
-                        number: '09175246984',
+                        number: user.number,
                         message: message
                       })
                       .end(function(res) {
