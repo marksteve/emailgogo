@@ -6,8 +6,6 @@ var conf = require('./conf'),
     xoauth2 = require('xoauth2'),
     request = require('superagent');
 
-var apiKey = '9uzQsvMNTyggsNvkirPN';
-
 exports.listen = function(userId) {
   async.waterfall([
     function(cb){
@@ -49,7 +47,7 @@ exports.listen = function(userId) {
                     request
                       .get('https://fireflyapi.com/api/sms')
                       .query({
-                        api: apiKey,
+                        api: conf.firefly.apiKey,
                         number: '09175246984',
                         message: message
                       })
